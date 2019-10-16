@@ -1,5 +1,5 @@
 import './style.scss'
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Form } from 'antd';
 import './style.scss';
 import loginSvg from '@/assets/animate/link.svg'
@@ -22,7 +22,8 @@ const Login: React.FC<LoginProps> = props => {
         dispatch({
             type: 'auth/login',
             payload: {
-                username
+                username,
+                password
             },
         });
     }
@@ -30,7 +31,7 @@ const Login: React.FC<LoginProps> = props => {
         <div className="login-page">
             <div className="login-center-area">
                 <div className="login-svg">
-                    <img src={loginSvg}/>
+                    <img src={loginSvg} alt="加载失败"/>
                 </div>
                 <WrapedLoginBox loginIn={loginIn}></WrapedLoginBox>
             </div>

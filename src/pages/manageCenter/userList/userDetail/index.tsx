@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react'
 import { Descriptions, Tag, Input, Button, message } from 'antd'
 import './style.scss'
 import http from '../../../../utils/axios'
-import router from 'umi/router';
 import withRouter from 'umi/withRouter';
 import { ConnectProps, ConnectState, Dispatch } from '@/models/connect';
 import { RouteComponentProps } from 'dva/router';

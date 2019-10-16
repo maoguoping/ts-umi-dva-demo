@@ -1,4 +1,3 @@
-import react from 'react'
 import { Spin } from 'antd'
 import './style.scss'
 import React from 'react'

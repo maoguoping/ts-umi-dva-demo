@@ -199,7 +199,7 @@ const PageModelState: PageModelStateType = {
       console.debug('setup', e);
       const headerMenuList = getLocalStorage('headerMenuList');
       const sideMenuList = getLocalStorage('sideMenuList');
-      if (headerMenuList && headerMenuList.length != 0) {
+      if (headerMenuList && headerMenuList.length !== 0) {
         dispatch({
           type: 'setHeaderMenuList',
           payload: headerMenuList
@@ -211,7 +211,7 @@ const PageModelState: PageModelStateType = {
         });
       }
       console.debug('sideMenuList内容', sideMenuList);
-      if (sideMenuList && sideMenuList.length != 0) {
+      if (sideMenuList && sideMenuList.length !== 0) {
         dispatch({
           type: 'setSideMenuList',
           payload: sideMenuList

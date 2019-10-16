@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './index.scss';
+import './index.scss';
 
 const BasicLayout: React.FC = props => {
   return (

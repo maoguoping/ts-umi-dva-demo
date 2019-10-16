@@ -64,7 +64,7 @@ const  UserList: React.FC<UserListProps> = props => {
       return item;
     }) 
     setSearchList(newSearchList);
-  },[roleList]);
+  },[roleList, searchList]);
   useEffect(() => {
     getUserList({});
   }, []);
