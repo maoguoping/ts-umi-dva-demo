@@ -1,10 +1,13 @@
 import React from 'react';
 import withRouter from 'umi/withRouter';
-const RightList: React.FC = (props: any) => {
+import { connect } from 'dva';
+import { RouteComponentProps } from 'dva/router';
+interface RightListProps extends RouteComponentProps{}
+const RightList: React.FC<RightListProps> = props => {
   return (
     <div>
     RightList
     </div>
   )
 }
-export default withRouter(RightList);
+export default withRouter(connect()(RightList));

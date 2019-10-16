@@ -1,10 +1,13 @@
 import React from 'react';
 import withRouter from 'umi/withRouter';
-const DeviceList: React.FC = (props: any) => {
+import { connect } from 'dva';
+import { RouteComponentProps } from 'dva/router';
+interface DeviceListProps extends RouteComponentProps{}
+const DeviceList: React.FC<DeviceListProps> = props => {
   return (
     <div>
     DeviceList
     </div>
   )
 }
-export default withRouter(DeviceList);
+export default withRouter(connect()(DeviceList));

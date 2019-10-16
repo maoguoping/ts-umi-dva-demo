@@ -1,6 +1,9 @@
 import axios from 'axios';
-
-const http = {
+interface HttpUtil {
+    post: any,
+    get: any
+}
+const http: HttpUtil = {
     post(url: string, data: any = {} , config: any = {}) {
         return new Promise((resolve, reject) => {
             axios.post(url, data, config).then(res => {

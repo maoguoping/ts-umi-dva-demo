@@ -5,10 +5,12 @@ import HeadBar from '../../components/module/headerBar'
 import SideMenu from '../../components/module/sideMenu'
 import router from 'umi/router'
 import { connect } from 'dva';
+import withRouter from 'umi/withRouter';
+import { RouteComponentProps } from 'dva/router';
 import { ConnectProps, ConnectState, Dispatch } from '@/models/connect';
 import LoadingPage from '../../components/module/loadingPage'
 const { Content, Sider } = Layout;
-interface ManageCenterProps extends ConnectProps {
+interface ManageCenterProps extends ConnectProps, RouteComponentProps {
     auth: any;
     page: any;
     location: any;
@@ -119,4 +121,4 @@ const ManageCenter: React.FC<ManageCenterProps> = props => {
         </Layout>
     )
 }
-export default connect(({auth, page}: ConnectState) => ({auth, page}))(ManageCenter);
+export default withRouter(connect(({auth, page}: ConnectState) => ({auth, page}))(ManageCenter));

@@ -1,12 +1,19 @@
 import React, {useState, useEffect} from 'react'
-import withRouter from 'umi/withRouter'
 import { Descriptions, Tag, Input, Button, message } from 'antd'
 import './style.scss'
 import http from '../../../../utils/axios'
 import router from 'umi/router';
+import withRouter from 'umi/withRouter';
+import { ConnectProps, ConnectState, Dispatch } from '@/models/connect';
+import { RouteComponentProps } from 'dva/router';
 import { connect } from 'dva';
 import qs from 'qs';
-function UserDetail (props) {
+interface UserDetailProps extends ConnectProps, RouteComponentProps{
+    dispatch: Dispatch;
+    auth: any;
+    page: any;
+}
+const UserDetail: React.FC<UserDetailProps> = props => {
     const { dispatch, auth } = props;
     const { roleList } = auth; 
     const [mode, setMode] = useState('edit');
@@ -18,7 +25,7 @@ function UserDetail (props) {
     });
     let roleMap = new Map();
     if (roleList.length > 0) {
-        roleList.forEach(item => {
+        roleList.forEach((item: any) => {
             roleMap.set(item.value, item.label);
         })
     }
@@ -37,22 +44,22 @@ function UserDetail (props) {
             payload: {}
         });
     }, [dispatch, props.history.location]);
-    function changeUsername (e) {
+    function changeUsername (e: any) {
         setUserDetailInfo({
             ...userDetailInfo,
             username: e.target.value
         })
     }
-    function changeUserTickname (e) {
+    function changeUserTickname (e: any) {
         setUserDetailInfo({
             ...userDetailInfo,
             userTickname: e.target.value
         })
     }
-    function loadData(userId) {
+    function loadData(userId: string) {
         http.get('/getUserDetailById', {
             userId
-        }).then(res => {
+        }).then((res: any) => {
             console.log(res);
             const data = res.data;
             setUserDetailInfo({
@@ -61,7 +68,7 @@ function UserDetail (props) {
                 userTickname: data.userTickname,
                 roleId: data.roleId
             })     
-        }).catch(err => {
+        }).catch((err: any) => {
             console.error(err);
         })
     }
@@ -84,19 +91,19 @@ function UserDetail (props) {
                 userId,
                 username,
                 userTickname
-            }).then(res => {
+            }).then((res: any) => {
                 message.success('保存成功');
                 loadData(userId);
-            }).catch(err => {
+            }).catch((err: any) => {
             })
         } else {
             http.get('/addUser', {
                 username,
                 userTickname
-            }).then(res => {
+            }).then((res: any) => {
                 message.success('新增成功');
                 window.history.go(-1);
-            }).catch(err => {
+            }).catch((err: any) => {
             })
         }
     }
@@ -117,7 +124,7 @@ function UserDetail (props) {
                     mode === 'edit' && 
                     <Descriptions.Item label="用户角色">
                         {
-                            userDetailInfo.roleId.map(tag => {
+                            userDetailInfo.roleId.map((tag: any) => {
                                 let color = tag.length > 5 ? 'geekblue' : 'green';
                                 if (tag === '00') {
                                     color = 'volcano';
@@ -144,4 +151,4 @@ function UserDetail (props) {
         </div>
     );
 }
-export default connect(({auth, page}) => ({auth, page}))(withRouter(UserDetail));
+export default withRouter(connect(({auth, page}: ConnectState) => ({auth, page}))(UserDetail));

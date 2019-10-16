@@ -1,4 +1,4 @@
-export const routeList = [
+export const routeList: any[] = [
     { path: '/', component: './index' },
     { path: '/login', component: './login' },
     {

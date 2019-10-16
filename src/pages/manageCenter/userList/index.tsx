@@ -9,7 +9,8 @@ import http from '../../../utils/axios'
 import router from 'umi/router';
 import { connect } from 'dva';
 import { ConnectProps, ConnectState, Dispatch } from '@/models/connect';
-interface UserListProps extends ConnectProps {
+import { RouteComponentProps } from 'dva/router';
+interface UserListProps extends ConnectProps, RouteComponentProps {
   auth: any;
   page: any;
   location: any;
@@ -72,16 +73,16 @@ const  UserList: React.FC<UserListProps> = props => {
     http.post('/getUserList',params).then((res: any) => {
       console.log(res);
       setTableData(res.data.list)
-    }).catch(err => {
+    }).catch((err: any) => {
     })
   }
   function deleteUser() {
     http.get('/deleteUser',{
       userId: deleteList.current[0]
-    }).then(res => {
+    }).then((res: any) => {
       message.success('删除用户成功');
       getUserList({});
-    }).catch(err => {
+    }).catch((err: any) => {
     })
   }
   function onDeleteUser (e: any) {
@@ -130,4 +131,4 @@ const  UserList: React.FC<UserListProps> = props => {
   </div>
   )
 }
-export default connect(({auth, page}: ConnectState) => ({auth, page}))(withRouter(UserList));
+export default withRouter(connect(({auth, page}: ConnectState) => ({auth, page}))(UserList));

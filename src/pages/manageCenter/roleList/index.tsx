@@ -1,10 +1,13 @@
 import React from 'react';
 import withRouter from 'umi/withRouter';
-const RoleList: React.FC = (props: any) => {
+import { connect } from 'dva';
+import { RouteComponentProps } from 'dva/router';
+interface RoleListProps extends RouteComponentProps{}
+const RoleList: React.FC<RoleListProps> = props => {
   return (
     <div>
     RoleList
     </div>
   )
 }
-export default withRouter(RoleList);
+export default withRouter(connect()(RoleList));
