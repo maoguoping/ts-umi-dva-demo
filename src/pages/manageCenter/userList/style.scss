@@ -1,0 +1,14 @@
+.user-list-page {
+    .user-list-search {
+        width: 100%;
+    }
+    .user-list-action-bar {
+        margin: 24px 0;
+        display: flex;
+        justify-content: flex-start;
+    }
+    .user-list-content {
+        width: 100%;
+        margin-top: 24px;
+    }
+}

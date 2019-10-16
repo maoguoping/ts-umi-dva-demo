@@ -1,0 +1,11 @@
+.user-list-table {
+    .table-action-btn {
+        cursor: pointer;
+        &.detail {
+            color: #1890ff;
+        }
+        &.delete {
+            color: #fa541c;
+        }
+    }
+}

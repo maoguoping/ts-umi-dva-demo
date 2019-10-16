@@ -1,0 +1,23 @@
+.search-form {
+    padding: 24px;
+    background: #fbfbfb;
+    border: 1px solid #d9d9d9;
+    border-radius: 6px;
+    .ant-form-item-label > label{
+        color: #1890ff !important;
+    }
+    .ant-form-item {
+        display: flex;
+    }
+    .ant-form-item-control-wrapper {
+        flex: 1;
+    }
+    .expand-btn {
+        margin-left: 12px;
+        font-size: 12px;
+    }
+    .search-box-btn {
+        width: 150px;
+        margin-left: 12px;
+    }
+}
