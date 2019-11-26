@@ -4,7 +4,11 @@ import './style.scss'
 interface DialogModalProps {
   onCancel: () => void;
   onConfirm: () => void;
-  data: any;
+  data: {
+    title: string;
+    type: string;
+    text: string;
+  };
   value: boolean;
 }
 const DialogModal: React.FC<DialogModalProps> = props => {

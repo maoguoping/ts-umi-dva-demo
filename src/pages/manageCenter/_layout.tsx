@@ -7,12 +7,12 @@ import router from 'umi/router'
 import { connect } from 'dva';
 import withRouter from 'umi/withRouter';
 import { RouteComponentProps } from 'dva/router';
-import { ConnectProps, ConnectState, Dispatch } from '@/models/connect';
+import { ConnectProps, ConnectState, Dispatch, AuthModelState, PageModelState } from '@/models/connect';
 import LoadingPage from '../../components/module/loadingPage'
 const { Content, Sider } = Layout;
 interface ManageCenterProps extends ConnectProps, RouteComponentProps {
-    auth: any;
-    page: any;
+    auth: AuthModelState;
+    page: PageModelState;
     location: any;
     dispatch: Dispatch;
     history: any;

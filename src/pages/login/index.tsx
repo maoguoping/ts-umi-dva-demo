@@ -5,16 +5,16 @@ import './style.scss';
 import loginSvg from '@/assets/animate/link.svg'
 import LoginBox from '@/components/module/loginBox';
 import { connect } from 'dva';
-import { ConnectProps, ConnectState, Dispatch } from '@/models/connect';
+import { ConnectProps, ConnectState, Dispatch, AuthModelState } from '@/models/connect';
 interface LoginProps extends ConnectProps {
-    auth: any;
+    auth: AuthModelState;
     location: any;
     dispatch: Dispatch;
 }
 const WrapedLoginBox: any = Form.create({ name: 'normal_login' })(LoginBox);
 const Login: React.FC<LoginProps> = props => {
     // const userInfo = props.userInfo;
-    const { dispatch, auth } = props;
+    const { dispatch } = props;
     const {from} = props.location.state || {from: {pathname: '/manageCenter/deviceList'}};
     function loginIn(data: any) {
         let {username, password} = data;

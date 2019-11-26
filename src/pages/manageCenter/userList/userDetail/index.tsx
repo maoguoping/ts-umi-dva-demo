@@ -3,14 +3,14 @@ import { Descriptions, Tag, Input, Button, message } from 'antd'
 import './style.scss'
 import http from '../../../../utils/axios'
 import withRouter from 'umi/withRouter';
-import { ConnectProps, ConnectState, Dispatch } from '@/models/connect';
+import { ConnectProps, ConnectState, Dispatch, AuthModelState, PageModelState } from '@/models/connect';
 import { RouteComponentProps } from 'dva/router';
 import { connect } from 'dva';
 import qs from 'qs';
 interface UserDetailProps extends ConnectProps, RouteComponentProps{
     dispatch: Dispatch;
-    auth: any;
-    page: any;
+    auth: AuthModelState;
+    page: PageModelState;
 }
 const UserDetail: React.FC<UserDetailProps> = props => {
     const { dispatch, auth } = props;
@@ -22,14 +22,14 @@ const UserDetail: React.FC<UserDetailProps> = props => {
         userTickname: '',
         roleId: []
     });
-    let roleMap = new Map();
+    let roleMap: Map<string, string> = new Map();
     if (roleList.length > 0) {
         roleList.forEach((item: any) => {
             roleMap.set(item.value, item.label);
         })
     }
-    const username = userDetailInfo.username;
-    const userTickname =userDetailInfo.userTickname;
+    const username: string = userDetailInfo.username;
+    const userTickname: string =userDetailInfo.userTickname;
     useEffect(() => {
         let location = props.history.location;
         let params = qs.parse(location.search.substring(1));

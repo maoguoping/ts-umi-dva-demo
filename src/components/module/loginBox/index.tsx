@@ -2,7 +2,6 @@ import React from 'react';
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
 import './style.scss'
 interface LoginBoxProps {
-    list: Array<any>;
     form: any;
     loginIn: (values: any) => void;
 }

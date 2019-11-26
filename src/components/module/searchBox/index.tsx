@@ -4,9 +4,16 @@ import React, { useState } from 'react'
 import './style.scss'
 const { Option } = Select;
 interface SearchBoxProps extends FormComponentProps {
-  list: Array<any>;
+  list: {
+    label: string;
+    placeholder: string;
+    type: string;
+    name: string;
+    options?: any[];
+    rule?: any;
+  }[];
   form: any;
-  onSearch: any;
+  onSearch: (e: any) => void;
 }
 const SearchBox: React.FC<SearchBoxProps> = props => {
   const needExpand = props.list.length > 6;

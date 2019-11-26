@@ -8,34 +8,56 @@ export type Effect = (
   action: AnyAction,
   effects: EffectsCommandMap & { select: <T>(func: (state: {}) => T) => T },
 ) => void;
-export interface PageInitStateType {
-  headerMenuList: Array<any>;
-  sideMenuList: Array<any>;
-  currentHeader: any;
-  currentSide: Array<any>;
-  innerPageList: Array<any>;
+export interface HeaderItem {
+  value: number;
+  label: string;
+  target: string;
+}
+export interface CurrentHeader {
+  value: number;
+  label: string;
+}
+export interface SiderItem {
+  value: string;
+  label: string;
+  children: any[];
+}
+export interface CurrentSiderItem {
+  value: string;
+  label: string;
+}
+export interface InnerPageItem {
+  value: string;
+  label: string;
+}
+export interface PageModelState {
+  headerMenuList: HeaderItem[];
+  sideMenuList: SiderItem[];
+  currentHeader: CurrentHeader;
+  currentSide: CurrentSiderItem[];
+  innerPageList: InnerPageItem[];
 };
-export interface PageModelStateType {
+export interface PageModelType {
   namespace: string;
-  state: PageInitStateType;
+  state: PageModelState;
   effects: {
     getHeaderMenuList: Effect;
     getSideMenuList: Effect;
     changeHistory: Effect;
   };
   reducers: {
-    setHeaderMenuList: Reducer<any>;
-    setSideMenuList: Reducer<any>;
-    setCurrentHeader: Reducer<any>;
-    setCurrentSide: Reducer<any>;
-    setInnerPageList: Reducer<any>;
+    setHeaderMenuList: Reducer<PageModelState>;
+    setSideMenuList: Reducer<PageModelState>;
+    setCurrentHeader: Reducer<PageModelState>;
+    setCurrentSide: Reducer<PageModelState>;
+    setInnerPageList: Reducer<PageModelState>;
   };
   subscriptions: {
     setup: Subscription
   }
 };
 
-const initState: PageInitStateType = {
+const initState: PageModelState = {
   headerMenuList: [],
   sideMenuList: [],
   currentHeader: {
@@ -54,7 +76,7 @@ const initState: PageInitStateType = {
   ],
   innerPageList: []
 }
-const PageModelState: PageModelStateType = {
+const PageModelType: PageModelType = {
   namespace: 'page',
   state: initState,
   reducers: {
@@ -71,7 +93,7 @@ const PageModelState: PageModelStateType = {
       };
     },
     setCurrentHeader(state = initState, { payload: { pathname } }) {
-      let currentHeader = null;
+      let currentHeader = state.currentHeader;
       let headerMenuList = state.headerMenuList;
       if (headerMenuList.length > 0) {
         for (const block of state.headerMenuList) {
@@ -83,8 +105,6 @@ const PageModelState: PageModelStateType = {
             break;
           }
         }
-      } else {
-        currentHeader = state.currentHeader;
       }
       return {
         ...state,
@@ -92,7 +112,7 @@ const PageModelState: PageModelStateType = {
       };
     },
     setCurrentSide(state = initState, { payload: { pathname }}) {
-      let currentSide = null;
+      let currentSide: CurrentSiderItem[] = [];
       let sideMenuList = state.sideMenuList;
       if (sideMenuList.length > 0) {
         for (const block of state.sideMenuList) {
@@ -235,4 +255,4 @@ const PageModelState: PageModelStateType = {
     }
   },
 };
-export default PageModelState;
+export default PageModelType;

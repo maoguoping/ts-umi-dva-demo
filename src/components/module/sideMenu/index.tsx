@@ -1,10 +1,15 @@
 import React from 'react'
 import {Menu, Icon } from 'antd';
 const { SubMenu } = Menu;
+export interface SiderItem {
+    value: string;
+    label: string;
+    children: any[];
+  }
 interface SideMenuProps {
-    list: [any];
-    defaultValue: any;
-    value: any;
+    list: SiderItem[];
+    defaultValue: string[];
+    value: string[];
     onClick: (e: any) => void;
 }
 const SideMenu: React.FC<SideMenuProps> = props => {

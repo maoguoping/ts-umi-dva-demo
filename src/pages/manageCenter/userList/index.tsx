@@ -3,25 +3,33 @@ import withRouter from 'umi/withRouter';
 import './style.scss'
 import { message, Button } from 'antd'
 import SearchBox from '../../../components/module/searchBox' 
-import UserListTable from './components/userListTable'
+import UserListTable, {UserListTableData} from './components/userListTable'
 import DialogModal from '../../../components/module/dialogModal'
 import http from '../../../utils/axios'
 import router from 'umi/router';
 import { connect } from 'dva';
-import { ConnectProps, ConnectState, Dispatch } from '@/models/connect';
+import { ConnectProps, ConnectState, Dispatch, AuthModelState, PageModelState } from '@/models/connect';
 import { RouteComponentProps } from 'dva/router';
 interface UserListProps extends ConnectProps, RouteComponentProps {
-  auth: any;
-  page: any;
+  auth: AuthModelState;
+  page: PageModelState;
   location: any;
   dispatch: Dispatch;
+}
+
+interface SearchListItem {
+  label: string,
+  placeholder: string,
+  type: string,
+  name: string,
+  options?: any[]
 }
 const  UserList: React.FC<UserListProps> = props => {
   const { dispatch, auth } = props;
   const { roleList } = auth; 
   let deleteList = useRef<Array<any>>([]);
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
-  const [searchList, setSearchList] = useState<Array<any>>([
+  const [searchList, setSearchList] = useState<SearchListItem[]>([
     {
       label: '用户名',
       placeholder: '请输入用户名',
@@ -42,7 +50,7 @@ const  UserList: React.FC<UserListProps> = props => {
       options: []
     }
   ]);
-  const [tableData, setTableData] = useState<Array<any>>([]);
+  const [tableData, setTableData] = useState<UserListTableData[]>([]);
   const deleteModalData = {
     title: '删除用户',
     text: '确定要删除该用户？',
@@ -50,11 +58,13 @@ const  UserList: React.FC<UserListProps> = props => {
   };
   console.log('初始化userList');
   useEffect(() => {
-    dispatch({
-      type: 'auth/getRoleList',
-      payload: {}
-    });
-  }, [dispatch]);
+    if (dispatch) {
+      dispatch({
+        type: 'auth/getRoleList',
+        payload: {}
+      });
+    }
+  }, []);
   useEffect(() => {
     console.debug('角色列表', roleList);
     const newSearchList = searchList.map(item => {

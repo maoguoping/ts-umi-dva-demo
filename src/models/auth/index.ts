@@ -4,20 +4,27 @@ import { AnyAction, Reducer } from 'redux';
 import { getLocalStorage, setLocalStorage } from '../../utils/persist'
 import { loginIn, getRouteInfo, getRoleList } from '../../services/auth'
 import { parse } from 'qs'
-const initState = {
-  userInfo: {
-    username: '',
-  },
-  routeInfo: null,
-  roleList: []
-}
+
 export type Effect = (
   action: AnyAction,
   effects: EffectsCommandMap & { select: <T>(func: (state: {}) => T) => T },
 ) => void;
-export interface AuthModelStateType {
+
+export interface UserInfo {
+  username: string;
+}
+export interface  RoleInfoItem {
+  value: string;
+  label: string;
+}
+export interface AuthModelState {
+  userInfo: UserInfo;
+  routeInfo: any;
+  roleList: RoleInfoItem[];
+}
+export interface AuthModelType {
   namespace: string;
-  state: {};
+  state: AuthModelState;
   effects: {
     login: Effect;
     logout: Effect;
@@ -26,15 +33,23 @@ export interface AuthModelStateType {
     getRoleList: Effect
   };
   reducers: {
-    setUserInfo: Reducer<{}>;
-    setRouteInfo: Reducer<{}>;
-    setRoleList: Reducer<{}>;
+    setUserInfo: Reducer<AuthModelState>;
+    setRouteInfo: Reducer<AuthModelState>;
+    setRoleList: Reducer<AuthModelState>;
   };
   subscriptions: {
     setup: Subscription
   }
 }
-const AuthModelState: AuthModelStateType = {
+const initState: AuthModelState = {
+  userInfo: {
+    username: '',
+  },
+  routeInfo: null,
+  roleList: []
+}
+
+const AuthModelType: AuthModelType = {
   namespace: 'auth',
   state: initState,
   reducers: {
@@ -137,4 +152,4 @@ const AuthModelState: AuthModelStateType = {
     },
   },
 };
-export default AuthModelState;
+export default AuthModelType;

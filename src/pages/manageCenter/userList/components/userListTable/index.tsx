@@ -1,14 +1,18 @@
 import React from 'react'
 import { Table, Divider, Tag } from 'antd'
 import './style.scss'
-interface UserListTable {
-  roleList: Array<any>;
-  data: any;
+
+interface UserListTableProps {
+  roleList: {
+    value: string;
+    label: string;
+  }[];
+  data: any[];
   onDetail: (text: string, record: any) => void;
   onDelete: (text: string, record: any) => void;
 }
-const UserListTable: React.FC<UserListTable> = props => {
-  let roleMap = new Map();
+const UserListTable: React.FC<UserListTableProps> = props => {
+  let roleMap: Map<string, string> = new Map();
   if (props.roleList.length > 0) {
     props.roleList.forEach((item: any) => {
       roleMap.set(item.value, item.label);
@@ -38,7 +42,7 @@ const UserListTable: React.FC<UserListTable> = props => {
       render: (roleId: [string]) => (
         <span>
           {roleId.map(tag => {
-            let color = tag.length > 5 ? 'geekblue' : 'green';
+            let color: string = tag.length > 5 ? 'geekblue' : 'green';
             if (tag === '00') {
               color = 'volcano';
             }

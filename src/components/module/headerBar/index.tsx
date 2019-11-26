@@ -4,7 +4,10 @@ import './style.scss'
 const {Header} = Layout;
 export interface HeaderBarProps {
     onChange: (e: any) => void;
-    list: any;
+    list: {
+        value: string;
+        label: string;
+    }[];
     onLogout: () => void;
 };
 const HeaderBar: React.FC<HeaderBarProps>  = (props: HeaderBarProps) => {

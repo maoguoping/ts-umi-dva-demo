@@ -1,12 +1,13 @@
 import { AnyAction } from 'redux';
 import { EffectsCommandMap } from 'dva';
 import { RouterTypes } from 'umi';
-import { AuthModelStateType } from './auth';
-import { PageModelStateType } from './page';
+import { AuthModelState } from './auth';
+import { PageModelState } from './page';
 
+export { AuthModelState, PageModelState };
 export interface ConnectState {
-  auth: AuthModelStateType;
-  page: PageModelStateType;
+  auth: AuthModelState;
+  page: PageModelState;
 }
 
 export type Effect = (
