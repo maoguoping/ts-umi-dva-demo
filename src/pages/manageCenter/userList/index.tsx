@@ -1,9 +1,9 @@
-import React, {useState, useEffect, useRef} from 'react'
+import React, {useState, useEffect, useRef, useLayoutEffect} from 'react'
 import withRouter from 'umi/withRouter';
 import './style.scss'
 import { message, Button } from 'antd'
 import SearchBox from '../../../components/module/searchBox' 
-import UserListTable, {UserListTableData} from './components/userListTable'
+import UserListTable from './components/userListTable'
 import DialogModal from '../../../components/module/dialogModal'
 import http from '../../../utils/axios'
 import router from 'umi/router';
@@ -26,10 +26,8 @@ interface SearchListItem {
 }
 const  UserList: React.FC<UserListProps> = props => {
   const { dispatch, auth } = props;
-  const { roleList } = auth; 
-  let deleteList = useRef<Array<any>>([]);
-  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
-  const [searchList, setSearchList] = useState<SearchListItem[]>([
+  const { roleList } = auth;
+  const searchList = [
     {
       label: '用户名',
       placeholder: '请输入用户名',
@@ -47,37 +45,30 @@ const  UserList: React.FC<UserListProps> = props => {
       placeholder: '请选择用户角色',
       type: 'select',
       name: 'roleId',
-      options: []
+      options: roleList
     }
-  ]);
-  const [tableData, setTableData] = useState<UserListTableData[]>([]);
+  ]
   const deleteModalData = {
     title: '删除用户',
     text: '确定要删除该用户？',
     type: 'question-circle'
   };
-  console.log('初始化userList');
-  useEffect(() => {
-    if (dispatch) {
-      dispatch({
-        type: 'auth/getRoleList',
-        payload: {}
-      });
-    }
+  let deleteList = useRef<Array<any>>([]);
+  const [tableData, setTableData] = useState<any[]>([]);
+  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
+  console.log('effect前')
+  useLayoutEffect(() => {
+    console.log('获取角色列表');
+    dispatch({
+      type: 'auth/getRoleList',
+      payload: {}
+    });
   }, []);
   useEffect(() => {
-    console.debug('角色列表', roleList);
-    const newSearchList = searchList.map(item => {
-      if (item.name === 'roleId') {
-        item.options = roleList;
-      }
-      return item;
-    }) 
-    setSearchList(newSearchList);
-  },[roleList, searchList]);
-  useEffect(() => {
+    console.log('获取用户列表')
     getUserList({});
   }, []);
+  console.log('effect后')
   function getUserList(info: any) {
     let params = info || {};
     http.post('/getUserList',params).then((res: any) => {

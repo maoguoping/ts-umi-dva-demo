@@ -22,12 +22,14 @@ const ManageCenter: React.FC<ManageCenterProps> = props => {
     const defaultValue: string[] = ['sub1','child1'];
     const [selectValue, setSelectValue] = useState<string[]>(['sub1','child1']);
     const [routeInfoReady, setRouteInfoReady] = useState<boolean>(true);
-    const [headPathNameList, setHeadPathNameList] = useState<Array<any>>([]);
-    const [sidePathNameList, setSidePathNameList]  = useState<Array<any>>([]);
-    const [innerPathNameList, setInnerPathNameList] = useState<Array<any>>([]);
-    const headerMenuList = page.headerMenuList;
     const sideMenuList = page.sideMenuList;
     const innerPageList = page.innerPageList;
+    const headPathNameList = [page.currentHeader.label];
+    console.log('侧边菜单', page.currentSide)
+    const sidePathNameList = page.currentSide.map((item: any) => item.label);
+    const innerPathNameList = innerPageList.map((item: any) => item.label);
+    const headerMenuList = page.headerMenuList;
+    
     useLayoutEffect(() => {
         console.debug('setRouteInfoReady', auth.routeInfo)
         if(auth.routeInfo) {
@@ -36,24 +38,6 @@ const ManageCenter: React.FC<ManageCenterProps> = props => {
             setRouteInfoReady(false);
         }
     }, [auth.routeInfo])
-    useEffect(() => {
-        let arr: any[] = [page.currentHeader.label];
-        setHeadPathNameList(arr);
-    }, [page.currentHeader]);
-    useEffect(() => {
-        let arr: any = []
-        page.currentSide.forEach((item: any) => {
-            arr.push(item.label);
-        });
-        setSidePathNameList(arr);
-    }, [page.currentSide]);
-    useEffect(() => {
-        let arr: any[] = []
-        page.innerPageList.forEach((item: any) => {
-            arr.push(item.label);
-        });
-        setInnerPathNameList(arr);
-    }, [page.innerPageList]);
     function changeTabMenu(e: any) {
         let {key} = e;
     }

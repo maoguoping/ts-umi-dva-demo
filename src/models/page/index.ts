@@ -9,12 +9,12 @@ export type Effect = (
   effects: EffectsCommandMap & { select: <T>(func: (state: {}) => T) => T },
 ) => void;
 export interface HeaderItem {
-  value: number;
+  value: string;
   label: string;
   target: string;
 }
 export interface CurrentHeader {
-  value: number;
+  value: string;
   label: string;
 }
 export interface SiderItem {
@@ -61,7 +61,7 @@ const initState: PageModelState = {
   headerMenuList: [],
   sideMenuList: [],
   currentHeader: {
-    value: 1,
+    value: '1',
     label: '管理中心'
   },
   currentSide: [
@@ -115,8 +115,11 @@ const PageModelType: PageModelType = {
       let currentSide: CurrentSiderItem[] = [];
       let sideMenuList = state.sideMenuList;
       if (sideMenuList.length > 0) {
-        for (const block of state.sideMenuList) {
+        console.log('菜单', state.sideMenuList)
+        for (const block of state.sideMenuList) { 
+          console.log('菜单1', block)
           for (const item of block.children) {
+            console.log('菜单定位', pathname, item.target, pathname.indexOf(item.target))
             if (pathname.indexOf(item.target) === 0) {
               currentSide = [
                 {
@@ -128,11 +131,7 @@ const PageModelType: PageModelType = {
                   label: item.label
                 }
               ];
-              break;
             }
-          }
-          if (currentSide) {
-            break;
           }
         }
       } else {
