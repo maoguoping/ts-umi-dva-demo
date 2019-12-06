@@ -1,7 +1,6 @@
 import React, {useState, useEffect, useLayoutEffect} from 'react'
 import './style.scss'
-import { Layout, Breadcrumb, PageHeader, Button, Icon } from 'antd'
-import HeadBar from '../../components/module/headerBar'
+import { Layout, Breadcrumb, Button, Icon } from 'antd'
 import SideMenu from '../../components/module/sideMenu'
 import router from 'umi/router'
 import { connect } from 'dva';
@@ -28,7 +27,6 @@ const ManageCenter: React.FC<ManageCenterProps> = props => {
     console.log('侧边菜单', page.currentSide)
     const sidePathNameList = page.currentSide.map((item: any) => item.label);
     const innerPathNameList = innerPageList.map((item: any) => item.label);
-    const headerMenuList = page.headerMenuList;
     
     useLayoutEffect(() => {
         console.debug('setRouteInfoReady', auth.routeInfo)
@@ -38,9 +36,6 @@ const ManageCenter: React.FC<ManageCenterProps> = props => {
             setRouteInfoReady(false);
         }
     }, [auth.routeInfo])
-    function changeTabMenu(e: any) {
-        let {key} = e;
-    }
     function changeSideMenu(e: any) {
         let {keyPath} = e;
         keyPath = keyPath.reverse();
@@ -67,20 +62,12 @@ const ManageCenter: React.FC<ManageCenterProps> = props => {
         console.debug('跳转的路由', target)
         router.push(target);
     }
-    function onLogout() {
-        dispatch({
-            type: 'auth/logout',
-            payload: {}
-        });
-    }
     function onBack () {
         props.history.goBack();
     }
     return (
-        <Layout className="App">
-            <HeadBar list={headerMenuList} onChange={changeTabMenu} onLogout={onLogout}></HeadBar>
-            <Layout className="main">
-                <Sider width={200} style={{ background: '#fff' }}>
+        <Layout className="manage-center">
+            <Sider width={200} style={{ background: '#fff' }}>
                     <SideMenu value={selectValue} defaultValue={defaultValue} list={sideMenuList} onClick={changeSideMenu}></SideMenu>
                 </Sider>
                 <Layout style={{ padding: '0 24px 24px' }}>
@@ -101,7 +88,6 @@ const ManageCenter: React.FC<ManageCenterProps> = props => {
                     {routeInfoReady ? props.children : <LoadingPage/>}
                     </Content>
                 </Layout>
-            </Layout>
         </Layout>
     )
 }

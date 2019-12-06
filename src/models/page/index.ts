@@ -81,6 +81,7 @@ const PageModelType: PageModelType = {
   state: initState,
   reducers: {
     setHeaderMenuList(state = initState, { payload: headerMenuList }) {
+      console.debug('头部菜单', headerMenuList)
       return {
         ...state,
         headerMenuList
@@ -160,6 +161,7 @@ const PageModelType: PageModelType = {
     *getHeaderMenuList({ payload }, { call, put }) {
       const { data, success } = yield call(getHeaderMenuList, parse(payload));
       if (success) {
+        yield console.debug('加载头部菜单', data)
         setLocalStorage('headerMenuList', data.list);
         yield put({
           type: 'setHeaderMenuList',

@@ -10,6 +10,11 @@ export default {
             data: {
                 list: [
                     {
+                        value: '0',
+                        label: '首页',
+                        target: '/index'
+                    },
+                    {
                         value: '1',
                         label: '管理中心',
                         target: '/manageCenter'

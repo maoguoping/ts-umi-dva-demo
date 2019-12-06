@@ -1,0 +1,29 @@
+.App {
+  height: 100vh;
+  width: 100vw;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  .logo {
+    width: 120px;
+    height: 31px;
+    background: rgba(255, 255, 255, 0.2);
+    margin: 16px 28px 16px 0;
+    float: left;
+  }
+  .ant-menu {
+    max-width: 400px;
+  }
+  .user-info-box {
+    width: 200px;
+    height: 64px;
+    line-height: 64px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    .avatar {
+      cursor: pointer;
+    }
+  }
+}
