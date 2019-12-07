@@ -21,9 +21,10 @@ const App: React.FC<AppProps> = props => {
   const { dispatch, auth, page } = props;
   const [routeInfoReady, setRouteInfoReady] = useState<boolean>(true);
   const sideMenuList = page.sideMenuList;
-  console.log('侧边菜单', page.currentSide)
+  console.log('location', location)
   const headerMenuList = page.headerMenuList;
-  
+  const pathname = location.pathname;
+  console.debug(pathname)
   useLayoutEffect(() => {
       console.debug('setRouteInfoReady', auth.routeInfo)
       if(auth.routeInfo) {
@@ -48,7 +49,7 @@ const App: React.FC<AppProps> = props => {
   }
   return (
       <Layout className="App">
-          <HeadBar list={headerMenuList} onChange={changeTabMenu} onLogout={onLogout}></HeadBar>
+          {pathname !== '/login' && <HeadBar list={headerMenuList} onChange={changeTabMenu} onLogout={onLogout}></HeadBar>} 
           <Layout className="main">
             {props.children}
           </Layout>

@@ -2,6 +2,9 @@ export const routeList: any[] = [
     {
         path: '/', component: './index', routes: [
             {
+                path: '/login', component: './login'
+            },
+            {
                 path: '/index', component: './index/index'
             },
             {
@@ -21,9 +24,11 @@ export const routeList: any[] = [
             },
             {
                 path: '/setting', component: './setting/index'
+            },
+            {
+                path: '/', component: './index/index'
             }
         ]
     },
-    { path: '/login', component: './login' },
     { component: './404' }
 ];
