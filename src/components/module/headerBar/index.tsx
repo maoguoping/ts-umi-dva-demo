@@ -43,7 +43,7 @@ const HeaderBar: React.FC<HeaderBarProps>  = (props: HeaderBarProps) => {
                 <Menu
                     theme="dark"
                     mode="horizontal"
-                    defaultSelectedKeys={['1']}
+                    defaultSelectedKeys={['0']}
                     style={{ lineHeight: '64px' }}
                     onClick={changeHeaderMenu}
                 >
