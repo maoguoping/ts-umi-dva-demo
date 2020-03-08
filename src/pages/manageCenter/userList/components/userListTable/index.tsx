@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { Table, Divider, Tag } from 'antd'
 import './style.scss'
 
@@ -12,12 +12,16 @@ interface UserListTableProps {
   onDelete: (text: string, record: any) => void;
 }
 const UserListTable: React.FC<UserListTableProps> = props => {
-  let roleMap: Map<string, string> = new Map();
-  if (props.roleList.length > 0) {
-    props.roleList.forEach((item: any) => {
-      roleMap.set(item.value, item.label);
-    })
-  }
+  const roleMap = useMemo(() => {
+    let map: Map<string, string> = new Map();
+    if (props.roleList.length > 0) {
+        console.log('计算role');
+        props.roleList.forEach((item: any) => {
+            map.set(item.value, item.label);
+        })
+    }
+    return map;
+}, [props.roleList])
   const columns = [
     {
       title: '用户名',

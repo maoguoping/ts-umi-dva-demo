@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useMemo, useEffect} from 'react'
 import { Descriptions, Tag, Input, Button, message } from 'antd'
 import './style.scss'
 import http from '../../../../utils/axios'
@@ -22,12 +22,16 @@ const UserDetail: React.FC<UserDetailProps> = props => {
         userTickname: '',
         roleId: []
     });
-    let roleMap: Map<string, string> = new Map();
-    if (roleList.length > 0) {
-        roleList.forEach((item: any) => {
-            roleMap.set(item.value, item.label);
-        })
-    }
+    const roleMap = useMemo(() => {
+        let map: Map<string, string> = new Map();
+        if (roleList.length > 0) {
+            console.log('计算role');
+            roleList.forEach((item: any) => {
+                map.set(item.value, item.label);
+            })
+        }
+        return map;
+    }, [roleList])
     const username: string = userDetailInfo.username;
     const userTickname: string =userDetailInfo.userTickname;
     useEffect(() => {

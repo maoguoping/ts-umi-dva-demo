@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useLayoutEffect} from 'react'
+import React, {useState, useMemo, useEffect, useLayoutEffect} from 'react'
 import './style.scss'
 import { Layout, Breadcrumb, Button, Icon } from 'antd'
 import SideMenu from '../../components/module/sideMenu'
@@ -25,9 +25,12 @@ const ManageCenter: React.FC<ManageCenterProps> = props => {
     const innerPageList = page.innerPageList;
     const headPathNameList = [page.currentHeader.label];
     console.log('侧边菜单', page.currentSide)
-    const sidePathNameList = page.currentSide.map((item: any) => item.label);
-    const innerPathNameList = innerPageList.map((item: any) => item.label);
-    
+    const sidePathNameList = useMemo(() => {
+        return page.currentSide.map((item: any) => item.label);
+    }, [page.currentSide]) ;
+    const innerPathNameList = useMemo(() => {
+        return innerPageList.map((item: any) => item.label);
+    }, [innerPageList]) 
     useLayoutEffect(() => {
         console.debug('setRouteInfoReady', auth.routeInfo)
         if(auth.routeInfo) {
