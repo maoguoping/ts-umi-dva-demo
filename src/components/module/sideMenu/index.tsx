@@ -16,7 +16,7 @@ const SideMenu: React.FC<SideMenuProps> = props => {
     const {list, defaultValue, value} = props;
     const defaultOpen = defaultValue[0];
     const defaultSelect = defaultValue[1];
-    console.debug('默认打开', defaultOpen)
+    console.debug('默认打开', list, defaultValue, value)
     return (
         <Menu
             mode="inline"
@@ -47,4 +47,4 @@ const SideMenu: React.FC<SideMenuProps> = props => {
         </Menu>
     )
 }
-export default SideMenu;
+export default React.memo(SideMenu);

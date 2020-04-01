@@ -20,11 +20,8 @@ interface AppProps extends ConnectProps, RouteComponentProps {
 const App: React.FC<AppProps> = props => {
   const { dispatch, auth, page } = props;
   const [routeInfoReady, setRouteInfoReady] = useState<boolean>(true);
-  const sideMenuList = page.sideMenuList;
-  console.log('location', location)
   const headerMenuList = page.headerMenuList;
   const pathname = location.pathname;
-  console.debug(pathname)
   useLayoutEffect(() => {
       console.debug('setRouteInfoReady', auth.routeInfo)
       if(auth.routeInfo) {

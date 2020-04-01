@@ -58,4 +58,4 @@ const HeaderBar: React.FC<HeaderBarProps>  = (props: HeaderBarProps) => {
         </Header>
     )
 }
-export default HeaderBar;
+export default React.memo(HeaderBar);

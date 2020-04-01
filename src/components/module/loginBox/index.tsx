@@ -60,4 +60,4 @@ const LoginBox: React.FC<LoginBoxProps> = props =>{
         </div>
     )
 }
-export default LoginBox;
+export default React.memo(LoginBox);

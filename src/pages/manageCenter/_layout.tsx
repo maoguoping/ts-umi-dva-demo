@@ -17,20 +17,36 @@ interface ManageCenterProps extends ConnectProps, RouteComponentProps {
     history: any;
 }
 const ManageCenter: React.FC<ManageCenterProps> = props => {
-    const { dispatch, auth, page } = props;
+    const { dispatch, auth, page, location } = props;
     const defaultValue: string[] = ['sub1','child1'];
-    const [selectValue, setSelectValue] = useState<string[]>(['sub1','child1']);
     const [routeInfoReady, setRouteInfoReady] = useState<boolean>(true);
     const sideMenuList = page.sideMenuList;
     const innerPageList = page.innerPageList;
     const headPathNameList = [page.currentHeader.label];
-    console.log('侧边菜单', page.currentSide)
+    const pathname = location.pathname;
+    console.debug('location', location)
+    console.debug('侧边菜单', page.sideMenuList)
     const sidePathNameList = useMemo(() => {
         return page.currentSide.map((item: any) => item.label);
     }, [page.currentSide]) ;
     const innerPathNameList = useMemo(() => {
         return innerPageList.map((item: any) => item.label);
-    }, [innerPageList]) 
+    }, [innerPageList])
+    // 根据路由确定侧边菜单值
+    const selectValue = useMemo(() => {
+        let keyPath = ['sub1','child1'];
+        for (const item of sideMenuList) {
+            if (item.children.length> 0) {
+                for (const child of item.children) {
+                    if (child.target === pathname) {
+                        keyPath = [item.value, child.value]
+                        break;
+                    }
+                }
+            }
+        }
+        return keyPath;
+    }, [pathname, sideMenuList])
     useLayoutEffect(() => {
         console.debug('setRouteInfoReady', auth.routeInfo)
         if(auth.routeInfo) {
@@ -39,6 +55,7 @@ const ManageCenter: React.FC<ManageCenterProps> = props => {
             setRouteInfoReady(false);
         }
     }, [auth.routeInfo])
+    // 切换侧边菜单
     const changeSideMenu = useCallback((e: any) => {
         let {keyPath} = e;
         keyPath = keyPath.reverse();
@@ -61,10 +78,10 @@ const ManageCenter: React.FC<ManageCenterProps> = props => {
                 break;
             }
         }
-        setSelectValue(keyPath);
         console.debug('跳转的路由', target)
         router.push(target);
     }, [sideMenuList])
+    // 返回
     const onBack = useCallback(() => {
         props.history.goBack();
     }, [props.history])
