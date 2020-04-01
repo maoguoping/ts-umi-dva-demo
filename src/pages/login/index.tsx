@@ -1,5 +1,5 @@
 import './style.scss'
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Form } from 'antd';
 import './style.scss';
 import loginSvg from '@/assets/animate/link.svg'
@@ -16,7 +16,7 @@ const Login: React.FC<LoginProps> = props => {
     // const userInfo = props.userInfo;
     const { dispatch } = props;
     const {from} = props.location.state || {from: {pathname: '/manageCenter/deviceList'}};
-    function loginIn(data: any) {
+    const loginIn = useCallback((data: any) => {
         let {username, password} = data;
         console.debug('触发登陆');
         dispatch({
@@ -26,7 +26,7 @@ const Login: React.FC<LoginProps> = props => {
                 password
             },
         });
-    }
+    }, [dispatch])
     return (
         <div className="login-page">
             <div className="login-center-area">

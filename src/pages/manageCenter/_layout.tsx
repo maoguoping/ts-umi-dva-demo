@@ -1,4 +1,4 @@
-import React, {useState, useMemo, useEffect, useLayoutEffect} from 'react'
+import React, {useState, useMemo, useEffect, useLayoutEffect, useCallback} from 'react'
 import './style.scss'
 import { Layout, Breadcrumb, Button, Icon } from 'antd'
 import SideMenu from '../../components/module/sideMenu'
@@ -39,7 +39,7 @@ const ManageCenter: React.FC<ManageCenterProps> = props => {
             setRouteInfoReady(false);
         }
     }, [auth.routeInfo])
-    function changeSideMenu(e: any) {
+    const changeSideMenu = useCallback((e: any) => {
         let {keyPath} = e;
         keyPath = keyPath.reverse();
         const sideList = sideMenuList;
@@ -64,10 +64,10 @@ const ManageCenter: React.FC<ManageCenterProps> = props => {
         setSelectValue(keyPath);
         console.debug('跳转的路由', target)
         router.push(target);
-    }
-    function onBack () {
+    }, [sideMenuList])
+    const onBack = useCallback(() => {
         props.history.goBack();
-    }
+    }, [props.history])
     return (
         <Layout className="manage-center">
             <Sider width={200} style={{ background: '#fff' }}>

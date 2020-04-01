@@ -1,5 +1,5 @@
 import Redirect from 'umi/redirect'
-import React, {useState, useEffect, useLayoutEffect} from 'react'
+import React, {useState, useEffect, useLayoutEffect, useCallback} from 'react'
 import './style.scss'
 import { Layout, Breadcrumb, PageHeader, Button, Icon } from 'antd'
 import HeadBar from '../components/module/headerBar'
@@ -33,20 +33,20 @@ const App: React.FC<AppProps> = props => {
           setRouteInfoReady(false);
       }
   }, [auth.routeInfo])
-  function changeTabMenu(target: string) {
+  const changeTabMenu = useCallback((target: string) => {
       console.debug('菜单点击', target)
       if (target === '/manageCenter') {
         router.push('/manageCenter/userList');
       } else {
         router.push(target);
       }
-  }
-  function onLogout() {
+  }, [])
+  const onLogout = useCallback(() => {
       dispatch({
           type: 'auth/logout',
           payload: {}
       });
-  }
+  }, [dispatch])
   return (
       <Layout className="App">
           {pathname !== '/login' && <HeadBar list={headerMenuList} onChange={changeTabMenu} onLogout={onLogout}></HeadBar>} 

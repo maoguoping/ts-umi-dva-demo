@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef, useLayoutEffect} from 'react'
+import React, {useState, useEffect, useRef, useLayoutEffect, useCallback} from 'react'
 import withRouter from 'umi/withRouter';
 import './style.scss'
 import { message, Button } from 'antd'
@@ -77,7 +77,7 @@ const  UserList: React.FC<UserListProps> = props => {
     }).catch((err: any) => {
     })
   }
-  function deleteUser() {
+  const deleteUser = useCallback(() => {
     http.get('/deleteUser',{
       userId: deleteList.current[0]
     }).then((res: any) => {
@@ -85,23 +85,23 @@ const  UserList: React.FC<UserListProps> = props => {
       getUserList({});
     }).catch((err: any) => {
     })
-  }
-  function onDeleteUser (e: any) {
+  }, [deleteList])
+  const onDeleteUser  = useCallback((e: any) => {
     deleteList.current.push(e.userId);
     setShowDeleteModal(true);
-  }
-  function onAddUser () {
-    router.push(`/manageCenter/userList/userDetail?mode=new`);
-  }
-  function  onDeleteConfirm () {
-    setShowDeleteModal(false);
-    deleteUser();
-  }
-  function onDeleteCancel () {
+  }, [deleteList])
+  const onDeleteCancel = useCallback(() => {
     deleteList.current = [];
     setShowDeleteModal(false);
-  }
-  function onSearch (e: any) {
+  }, [deleteList])
+  const onAddUser = useCallback(() => {
+    router.push(`/manageCenter/userList/userDetail?mode=new`);
+  }, [])
+  const onDeleteConfirm = useCallback(() => {
+    setShowDeleteModal(false);
+    deleteUser();
+  }, [])
+  const onSearch = useCallback((e: any) => {
     console.log('搜索信息', e);
     let userId = e.userId || '';
     let roleId = e.roleId || '';
@@ -111,12 +111,12 @@ const  UserList: React.FC<UserListProps> = props => {
       roleId,
       username
     });
-  }
-  function onDetail (e: any) {
+  }, [])
+  const onDetail = useCallback((e: any) => {
     console.log('查看详情');
     let userId = e.userId || '';
     router.push(`/manageCenter/userList/userDetail?mode=edit&userId=${userId}`);
-  }
+  }, [])
   return (
     <div className="user-list-page">
     <div className="user-list-search">

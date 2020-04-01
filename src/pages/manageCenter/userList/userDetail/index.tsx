@@ -1,4 +1,4 @@
-import React, {useState, useMemo, useEffect} from 'react'
+import React, {useState, useMemo, useEffect, useCallback} from 'react'
 import { Descriptions, Tag, Input, Button, message } from 'antd'
 import './style.scss'
 import http from '../../../../utils/axios'
@@ -47,18 +47,18 @@ const UserDetail: React.FC<UserDetailProps> = props => {
             payload: {}
         });
     }, [dispatch, props.history.location]);
-    function changeUsername (e: any) {
+    const changeUsername = useCallback((e: any) => {
         setUserDetailInfo({
             ...userDetailInfo,
             username: e.target.value
         })
-    }
-    function changeUserTickname (e: any) {
+    },[userDetailInfo])
+    const changeUserTickname = useCallback((e: any) => {
         setUserDetailInfo({
             ...userDetailInfo,
             userTickname: e.target.value
         })
-    }
+    }, [userDetailInfo])
     function loadData(userId: string) {
         http.get('/getUserDetailById', {
             userId
